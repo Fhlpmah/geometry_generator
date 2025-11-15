@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family House Generator</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="panel left">
+      <h1>Architectural Case: Geometry Generator</h1>
+
+      <label for="comfortInput">Comfort Zones (Default: 5)</label>
+      <input type="number" id="comfortInput" value="5" min="0" />
+
+      <label for="transparentInput">Transparent Buffers (Default: 3)</label>
+      <input type="number" id="transparentInput" value="3" min="0" />
+
+      <label for="opaqueInput">Opaque Buffers (Default: 1)</label>
+      <input type="number" id="opaqueInput" value="1" min="0" />
+
+      <div class="buttons">
+        <button id="generateBtn" onclick="handleGenerate()">Generate</button>
+        <button id="resetBtn" onclick="handleReset()">Reset</button>
+        <button id="exportCsvBtn" onclick="handleExportCsv()" disabled>Export CSV</button>
+      </div>
+      
+      <section class="analysis-results">
+        <h3>Analysis</h3>
+        <ul id="analysisList">
+          <li>W_max: N/A</li>
+          <li>L_max: N/A</li>
+          <li>H_max: N/A</li>
+          <li>Volume: N/A</li>
+          <li>COG: N/A</li>
+          <li>Main Front: N/A</li>
+        </ul>
+      </section>
+
+      <section class="indicators">
+        <h3>Backtracking Process Log</h3>
+        <div id="rulesContainer">
+          <ul id="rulesList">
+            </ul>
+        </div>
+      </section>
+
+      <section class="console">
+        <h3>Console Log</h3>
+        <div id="consoleLog">
+          Awaiting generation...
+        </div>
+      </section>
+
+      <section class="legend">
+        <h3>Legend</h3>
+        <ul>
+          <li><span class="box comfort"></span> Comfort (Gold)</li>
+          <li><span class="box transparent"></span> Transparent (Sky Blue)</li>
+          <li><span class="box opaque"></span> Opaque (Green)</li>
+        </ul>
+      </section>
+    </aside>
+
+    <main class="panel right">
+      <div id="three-container"></div>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

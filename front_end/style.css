@@ -1,0 +1,160 @@
+:root {
+  --bg-dark: #0f172a;
+  --bg-panel: #1e293b;
+  --text: #e2e8f0;
+  --accent: #38bdf8;
+  --fail: #ef4444;
+  --pass: #22c55e;
+  --separator: #334155; /* New color for log separator */
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layout {
+  display: flex;
+  width: 100%;
+}
+
+.panel.left {
+  width: 300px;
+  background: var(--bg-panel);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  border-right: 1px solid #334155;
+  font-size: 0.9rem; /* Slightly smaller text for controls */
+}
+
+.panel.right {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+h1 {
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+label {
+  font-size: 0.9rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.3rem;
+  margin-bottom: 0.5rem;
+  background: #0f172a;
+  color: var(--text);
+  border: 1px solid #334155;
+  border-radius: 4px;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap; /* Allows buttons to wrap if space is tight */
+}
+
+button {
+  flex: 1;
+  min-width: 80px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #0ea5e9;
+}
+
+button:disabled {
+  background: #475569;
+  cursor: not-allowed;
+}
+
+#three-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Console and Rules Log Styling (Topic 5 & 6) */
+#consoleLog, #rulesContainer {
+  background: #0f172a;
+  padding: 0.5rem;
+  border-radius: 4px;
+  max-height: 150px; /* Limit height */
+  overflow-y: auto; /* Enable scrolling */
+  font-family: monospace;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+}
+
+#rulesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#rulesList li {
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.log-pass {
+  color: var(--pass);
+}
+
+.log-fail {
+  color: var(--fail);
+}
+
+.log-separator {
+  color: var(--separator);
+  font-style: italic;
+  text-align: center;
+}
+
+
+/* Legend Styling */
+.legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.legend ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.box {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+  border-radius: 2px;
+}
+
+/* Colors matching Python (block_generation.py) */
+.comfort { background: #FFD700; }
+.transparent { background: #87CEEB; }
+.opaque { background: #3CB371; }
+.cog { background: #FF0000; } /* Red for Center of Gravity */
