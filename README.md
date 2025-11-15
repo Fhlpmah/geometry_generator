@@ -1,169 +1,103 @@
-# 🏗️ Modular Family House Geometry Generator
+# Architectural Geometry Generatior
 
-An intelligent system for generating and validating 3D architectural geometries using constraint satisfaction and backtracking algorithms. Features dual generation modes: **Random Mode** (fast random placement) and **Correct Mode** (CSV-based validated geometries with customizable transparent buffers).
+A backend and frontend system for generating and validating 3D architectural geometries.
+The system supports automatic block placement, rule-based validation, CSV exporting, and real-time 3D visualization through a Three.js interface.
 
-![Project Status](https://img.shields.io/badge/status-active-success.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
-![React](https://img.shields.io/badge/react-18.3-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## 🌟 Features
+## Overview
 
-- **Dual Generation Modes**:
-  - 🎲 **Random Mode**: Generate all blocks randomly using backtracking algorithm
-  - ✅ **Correct Mode**: Load validated base geometry from CSV + place transparent buffers intelligently
-- **Interactive 3D Visualization**: Real-time Three.js rendering with color-coded blocks
-- **User-Controlled Transparency**: Select 1, 2, or 3 transparent buffers via radio buttons
-- **Fast Generation**: Correct mode generates in <1 second (vs 10-180s with full backtracking)
-- **Comprehensive Validation**: 20+ architectural rules with detailed violation reports
-- **REST API**: Clean Flask API with JSON responses
+This project provides a constraint-based geometry generator using Python (Flask) for the backend and React for the frontend.
+Two generation modes are available:
+1. Random Mode – generates all blocks using a backtracking algorithm.
+2. Correct Mode – loads a pre-validated base geometry from CSV and places additional transparent blocks.
 
-## 📦 Architecture
+All generated geometries can be visualized in 3D and exported as CSV.
 
-### Block Types
-- **Comfort Zones** (Green): 5 blocks, 1×1×1 cells each
-- **Transparent Buffers** (Blue): 1-3 blocks (user-selectable), 1×1×1 cells each
-- **Opaque Buffer** (Orange): 1 block, 1×1×1 cells
+## Features
 
-### Grid System
-- **Dimensions**: 8×4×3 cells (X × Y × Z)
-- **Cell Size**: 2.75m × 2.75m × 3m
-- **Total Blocks**: 7-9 blocks depending on transparent buffer selection
+- Geometry generation with backtracking algorithms
+- Frontend 3D visualization using Three.js
+- REST API for programmatic access
+- CSV export for external use
 
-## 🚀 Quick Start
+Validation system covering architectural constraints
+
+## Set-up
 
 ### Prerequisites
 
 - Python 3.8+
-- Node.js 14+
-- npm or yarn
+- pip 24+
+- git 2.50
 
 ### Installation
 
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/hoangtrietdev/Geometry-Generation.git
-cd Geometry-Generation
-```
-
-2. **Setup Backend**:
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-3. **Setup Frontend**:
-```bash
-cd ../frontend
-npm install
+git clone https://github.com/Fhlpmah/geometry_generator.git
+cd <the_project_folder>
 ```
 
 ### Running the Application
 
-1. **Start Backend** (Terminal 1):
+1. **Start Backend (Flask API)**
 ```bash
-cd backend
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-python3 api.py
+cd back_end
+source venv/bin/activate      # Windows: venv\Scripts\activate
+python3 app.py  
 ```
-Backend runs on `http://localhost:5001`
 
-2. **Start Frontend** (Terminal 2):
-```bash
-cd frontend
-npm start
-```
-Frontend opens at `http://localhost:3000`
+The backend will run at: `http://localhost:5000`
+
+2. **Open the Frontend**
+The frontend is plain HTML/JS, so there are two options:
+
+Option A — Open directly in browser (if it works)
+- Go to the `front_end` folder
+- Open `index.html` by double-clicking it. It will open in (Chrome / Firefox / Edge)
+
+Option B — Recommended: Use Live Server
+If your browser blocks file paths (CORS), use VS Code:
+1. Open the project in VS Code
+2. Install the Live Server extension
+3. Right-click `index.html
+4. Select “Open with Live Server”
+
+Frontend will open at: `http://localhost:5500`
 
 ## 🎯 Usage
 
 ### Generate Geometry
 
-1. **Select Transparent Buffers**: Choose 1, 2, or 3 transparent buffers using radio buttons
-2. **Choose Mode**:
-   - ⬜ **Unchecked (Correct Mode)**: Loads validated geometry from CSV + adds random transparent buffers
-   - ✅ **Checked (Random Mode)**: Generates all blocks randomly
-3. **Click "Generate Geometry"**: View results in 3D
+1. **Select Comfort Zones**: Choose the number of comfort zones by typing
+2. **Select Transparent Buffer**: Choose the number of transparent buffers by typing
+3. **Select Opaque Buffer**: Choose the number of opaque buffers by typing
+4. **Click "Generate Geometry"**: View results in 3D
 
-### Generation Modes Explained
+### Blocks Generation Explained
 
-#### 🎲 Random Mode (Checkbox Checked)
-- Generates **all blocks** randomly using backtracking
+- Generates blocks randomly using backtracking based on how much blocks for each type of blocks.
 - Fast generation (<5 seconds)
-- May violate some architectural rules
-- Good for exploration and testing
-
-#### ✅ Correct Mode (Checkbox Unchecked) 
-- Loads **base geometry** from `full_data.csv` (5 Comfort + 1 Opaque)
-- Randomly places **transparent buffers** adjacent to comfort zones
-- Ultra-fast (<1 second)
-- Base geometry is pre-validated
-- Perfect for production use
+- Rules validation while backtracking executing.
 
 ## 📁 Project Structure
 
 ```
 Geometry-Generation/
-├── backend/
+├── back_end/
 │   ├── api.py                      # Flask REST API
-│   ├── models.py                   # Data structures (Block, Geometry)
-│   ├── backtracking.py             # Backtracking algorithm
-│   ├── csv_geometry_loader.py      # CSV loader + transparent placement
-│   ├── assembly_rules.py           # Assembly validation rules
-│   ├── validation.py               # Geometry validation
-│   ├── descriptors.py              # Architectural descriptors
-│   ├── full_data.csv               # Pre-validated geometries
-│   ├── requirements.txt            # Python dependencies
-│   └── README.md                   # Backend documentation
+│   ├── block_generation.py         # Backtracking, Validation Algorithm
+│   ├── main.js                     # Main Website Component
 ├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── GenerateSection.tsx # Generation UI + controls
-│   │   │   └── GeometryViewer.tsx  # 3D visualization
-│   │   ├── App.tsx                 # Main app component
-│   │   └── index.tsx               # Entry point
-│   ├── package.json                # Node dependencies
-│   └── README.md                   # Frontend documentation
+│   ├── index.html                  # Website Interface
+│   ├── style.css                   # Website Interface Style
 ├── .gitignore
 └── README.md                       # This file
 ```
 
-## 🔌 API Endpoints
-
-### Generate Geometry
-```http
-POST /api/generate
-Content-Type: application/json
-
-{
-  "mode": "correct",           # "correct" or "random"
-  "comfort_zones": 5,          # Fixed at 5
-  "transparent_buffers": 2,    # 1, 2, or 3 (user-selected)
-  "opaque_buffers": 1          # Fixed at 1
-}
-```
-
-**Response**:
-```json
-{
-  "success": true,
-  "mode": "correct",
-  "csv_data": "1;0;0;0;1;0;0;...",
-  "validation": {
-    "is_valid": true,
-    "violated_rules": [],
-    "warnings": []
-  },
-  "generation_time": 0.12,
-  "note": "Base geometry loaded from CSV (ID: 78), transparent buffers placed randomly",
-  "source": "csv_with_random_transparent",
-  "csv_geometry_id": 78
-}
-```
-
-## 🛠️ Technologies
+## Technologies
 
 ### Backend
 - **Flask**: REST API framework
@@ -171,107 +105,20 @@ Content-Type: application/json
 - **CSV**: Data storage for validated geometries
 
 ### Frontend
-- **React 18.3**: UI framework
-- **TypeScript**: Type-safe development
 - **Three.js** (via @react-three/fiber): 3D visualization
-- **Axios**: HTTP client
 
-## 📊 Performance
-
-| Mode | Generation Time | Validation | Use Case |
-|------|----------------|------------|----------|
-| **Correct** | <1 second | Pre-validated base | Production, fast results |
-| **Random** | <5 seconds | May violate rules | Exploration, testing |
-
-## 🧪 Testing
-
-### Backend Tests
-```bash
-cd backend
-python3 csv_geometry_loader.py  # Test CSV loader
-```
-
-### Manual Testing
-1. Start both backend and frontend
-2. Test Correct Mode:
-   - Select 1 transparent buffer → Should show 7 blocks
-   - Select 2 transparent buffers → Should show 8 blocks
-   - Select 3 transparent buffers → Should show 9 blocks
-3. Test Random Mode:
-   - Check "Generate Random Geometry"
-   - Should generate all blocks randomly
-
-## 🐛 Troubleshooting
-
-### Backend won't start
-```bash
-# Check Python version
-python3 --version  # Should be 3.8+
-
-# Reinstall dependencies
-pip install -r requirements.txt
-```
-
-### Frontend won't connect
-```bash
-# Check backend is running
-curl http://localhost:5001/api/generate
-
-# Check CORS is enabled in api.py
-# Verify CORS(app) is present
-```
-
-### 3D viewer shows blocks too large
-- **Issue**: Blocks appear as 2×2 cubes instead of 1×1
-- **Fix**: Ensure both `models.py` (backend) and `GeometryViewer.tsx` (frontend) use 1×1×1 dimensions
-
-## 📝 Configuration
-
-### Backend Configuration
-Edit `backend/api.py`:
-```python
-# Port configuration (line ~535)
-app.run(host='0.0.0.0', port=5001, debug=True)
-
-# Grid size (line ~10 in backtracking.py)
-max_x, max_y, max_z = 8, 4, 3
-```
-
-### Frontend Configuration
-Edit `frontend/src/components/GenerateSection.tsx`:
-```typescript
-// API URL (line ~20)
-const API_URL = 'http://localhost:5001';
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Authors
+## Developers
 
-- **Hoang Triet** - [@hoangtrietdev](https://github.com/hoangtrietdev)
+- **Minho Choi** - [-](-)
+- **Fhilipus Mahendra** - [@fhlpmah](https://github.com/fhlpmah)
+- **Danial Sadad** - [@danialsadad](https://github.com/danialsadad)
+- **Zhao Yawen** - [-](-)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Three.js community for 3D rendering capabilities
 - Flask community for lightweight API framework
-- React Three Fiber for seamless React + Three.js integration
-
-## 📧 Support
-
-For issues and questions:
-- Open an issue on [GitHub Issues](https://github.com/hoangtrietdev/Geometry-Generation/issues)
-- Email: [your-email@example.com]
-
----
-
-**Made with ❤️ for architectural geometry generation**
